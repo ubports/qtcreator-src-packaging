@@ -1,0 +1,54 @@
+Author: Pino Toscano <pino@debian.org>
+Description: Enable RPATH also on kFreeBSD and Hurd
+ qtcreator's plugins use RPATH to locate the qtcreator libraries, so enable it
+ also on kFreeBSD and Hurd.
+Last-Update: 2014-08-19
+Forwarded: no
+
+---
+ src/qtcreatorplugin.pri                         |    2 +-
+ src/rpath.pri                                   |    2 +-
+ src/tools/qtcreatorwidgets/qtcreatorwidgets.pro |    4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+--- a/src/rpath.pri
++++ b/src/rpath.pri
+@@ -1,6 +1,6 @@
+ macx {
+     QMAKE_LFLAGS += -Wl,-rpath,@loader_path/../,-rpath,@executable_path/../
+-} else:linux-* {
++} else:linux-*|glibc-*|hurd-* {
+     #do the rpath by hand since it's not possible to use ORIGIN in QMAKE_RPATHDIR
+     # this expands to $ORIGIN (after qmake and make), it does NOT read a qmake var
+     QMAKE_RPATHDIR += \$\$ORIGIN
+--- a/src/qtcreatorplugin.pri
++++ b/src/qtcreatorplugin.pri
+@@ -94,7 +94,7 @@ contains(QT_CONFIG, reduce_exports):CONF
+ 
+ TEMPLATE = lib
+ CONFIG += plugin plugin_with_soname
+-linux*:QMAKE_LFLAGS += $$QMAKE_LFLAGS_NOUNDEF
++linux*|glibc-*|hurd-*:QMAKE_LFLAGS += $$QMAKE_LFLAGS_NOUNDEF
+ 
+ target.path = $$INSTALL_PLUGIN_PATH
+ INSTALLS += target
+--- a/src/tools/qtcreatorwidgets/qtcreatorwidgets.pro
++++ b/src/tools/qtcreatorwidgets/qtcreatorwidgets.pro
+@@ -13,7 +13,7 @@ isEmpty(IDE_LIBRARY_BASENAME) {
+     IDE_LIBRARY_BASENAME = lib
+ }
+ 
+-linux-*||win32 {
++linux-*||win32||glibc-*||hurd-* {
+   # form abs path to qtcreator lib dir
+   QTC_LIBS=$$dirname(OUT_PWD)
+   QTC_LIBS=$$dirname(QTC_LIBS)
+@@ -21,7 +21,7 @@ linux-*||win32 {
+   QTC_LIBS=$$QTC_LIBS/$$IDE_LIBRARY_BASENAME/qtcreator
+ }
+ 
+-linux-*{  
++linux-*|glibc-*|hurd-*{
+   QMAKE_RPATHDIR *= $$QTC_LIBS
+ }
+ 

@@ -1,0 +1,15 @@
+---
+ qtcreator.pri |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/qtcreator.pri
++++ b/qtcreator.pri
+@@ -134,7 +134,7 @@ osx {
+     IDE_LIBRARY_PATH = $$IDE_OUTPUT_PATH/$$IDE_LIBRARY_BASENAME/qtcreator
+     IDE_PLUGIN_PATH  = $$IDE_LIBRARY_PATH/plugins
+     IDE_DATA_PATH    = $$IDE_OUTPUT_PATH/share/qtcreator
+-    IDE_DOC_PATH     = $$IDE_OUTPUT_PATH/share/doc/qtcreator
++    IDE_DOC_PATH     = $$IDE_OUTPUT_PATH/share/qtcreator/doc
+     IDE_BIN_PATH     = $$IDE_OUTPUT_PATH/bin
+     win32: \
+         IDE_LIBEXEC_PATH = $$IDE_OUTPUT_PATH/bin

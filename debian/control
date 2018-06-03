@@ -1,0 +1,103 @@
+Source: qtcreator
+Section: devel
+Priority: optional
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>
+Uploaders: Adam Majer <adamm@zombino.com>,
+           Jeremy Lainé <jeremy.laine@m4x.org>,
+           Lisandro Damián Nicanor Pérez Meyer <lisandro@debian.org>,
+           Simon Quigley <tsimonq2@ubuntu.com>
+Build-Depends: debhelper (>= 11),
+               libbotan-2-dev,
+               libclang-6.0-dev [amd64 i386],
+               libicu-dev,
+               libjs-jquery,
+               libqt5opengl5-dev (>= 5.6.2~),
+               libqt5sql5-sqlite (>= 5.6.2~),
+               libqt5webkit5-dev (>= 5.6.2~),
+               libqt5x11extras5-dev (>= 5.6.2~),
+               llvm-6.0-dev [amd64 i386],
+               pkg-config,
+               qbs-dev (>= 1.10~),
+               qml-module-qtquick-controls (>= 5.6.2~),
+               qml-module-qtquick2 (>= 5.6.2~),
+               qtbase5-dev (>= 5.6.2~),
+               qtbase5-private-dev (>= 5.6.2~),
+               qtdeclarative5-dev (>= 5.6.2~),
+               qtdeclarative5-private-dev (>= 5.6.2~),
+               qtscript5-dev (>= 5.6.2~),
+               qttools5-dev (>= 5.6.2~),
+               qttools5-dev-tools (>= 5.6.2~),
+               qttools5-private-dev (>= 5.6.2~),
+               qtxmlpatterns5-dev-tools (>= 5.6.2~),
+               zlib1g-dev,
+Standards-Version: 4.1.3
+Homepage: https://doc.qt.io/qt-5/topics-app-development.html
+Vcs-Git: https://salsa.debian.org/qt-kde-team/qt/qtcreator.git
+Vcs-Browser: https://salsa.debian.org/qt-kde-team/qt/qtcreator
+
+Package: qtcreator
+Architecture: any
+Depends: libqt5sql5-sqlite,
+         qml-module-qtqml-models2,
+         qml-module-qtquick-controls (>= 5.5.0~),
+         qml-module-qtquick2 (>= 5.5.0~),
+         qtchooser,
+         qtcreator-data (= ${source:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends}
+Recommends: clang,
+            gdb,
+            make,
+            qmlscene,
+            qt5-doc,
+            qt5-qmltooling-plugins,
+            qtbase5-dev-tools,
+            qtcreator-doc,
+            qtdeclarative5-dev-tools,
+            qttools5-dev-tools,
+            qttranslations5-l10n,
+            qtxmlpatterns5-dev-tools,
+            xterm | x-terminal-emulator
+Suggests: cmake, g++, git, kate-data, subversion
+Breaks: qtcreator-data (<< 4.5.2-2~)
+Replaces: qtcreator-data (<< 4.5.2-2~)
+Description: integrated development environment (IDE) for Qt
+ Qt Creator is a cross-platform integrated development environment (IDE)
+ designed to make development with the Qt application framework faster
+ and easier.
+ .
+ It includes:
+  * An advanced C++ code editor
+  * Integrated GUI layout and forms designer
+  * Project and build management tools
+  * Integrated, context-sensitive help system
+  * Visual debugger
+  * Rapid code navigation tools
+  * Supports multiple platforms
+  * Qt Quick Designer
+
+Package: qtcreator-data
+Architecture: all
+Depends: ${misc:Depends}
+Description: application data for Qt Creator IDE
+ This package contains architecture-independent data for Qt Creator IDE.
+
+Package: qtcreator-doc
+Architecture: all
+Section: doc
+Depends: ${misc:Depends}
+Suggests: qt5-doc
+Description: documentation for Qt Creator IDE
+ This package contains documentation for Qt Creator IDE.
+
+Package: qtcreator-plugin-ubuntu
+Architecture: all
+Section: oldlibs
+Depends: qtcreator,
+         ${misc:Depends},
+Description: transitional dummy package for former Ubuntu SDK package
+ This is a transitional dummy package which can be safely removed.
+ .
+ Ubuntu SDK is now distributed separately for all supported Ubuntu versions.
+ Please see http://developer.ubuntu.com/ for more information.

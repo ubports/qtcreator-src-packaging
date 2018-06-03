@@ -1,0 +1,37 @@
+Author: Benjamin Zeller <benjamin.zeller@canonical.com>
+Description: Fix piling up of Qt configurations.
+ The current Debian Qt autodetection patch registers a "new" Qt version 
+ on each Qt Creator startup. This fixes it.
+Last-Update: 2015-11-02
+Forwarded: no
+
+--- a/src/plugins/qtsupport/qtversionmanager.cpp
++++ b/src/plugins/qtsupport/qtversionmanager.cpp
+@@ -445,7 +445,7 @@ static void updateSystemQt()
+ 
+     QMap<QString, int> currentAutoVersions;
+     for (QMap<int, BaseQtVersion *>::const_iterator i = m_versions.begin(); i != m_versions.end(); ++i) {
+-        if (i.value()->isAutodetected()) {
++        if (i.value()->isAutodetected() && !i.value()->autodetectionSource().startsWith(QLatin1String("SDK."))) {
+             currentAutoVersions.insert(i.value()->qmakeCommand().toString(), i.key());
+         }
+     }
+--- a/src/libs/utils/buildablehelperlibrary.cpp
++++ b/src/libs/utils/buildablehelperlibrary.cpp
+@@ -82,8 +82,15 @@ FileName BuildableHelperLibrary::findSys
+ 
+         if (dir.exists(qmake)) {
+             const QString qmakePath = dir.absoluteFilePath(qmake);
+-            if (isQmake(qmakePath))
++            if (isQmake(qmakePath)) {
++                QFileInfo fi(qmakePath);
++                if (BuildableHelperLibrary::isQtChooser(fi)) {
++                    const QString qtChooserPath = BuildableHelperLibrary::qtChooserToQmakePath(fi.symLinkTarget());
++                    if (!qtChooserPath.isEmpty())
++                        return FileName::fromString(qtChooserPath);
++                }
+                 return FileName::fromString(qmakePath);
++            }
+         }
+ 
+         // Prefer qmake-qt5 to qmake-qt4 by sorting the filenames in reverse order.

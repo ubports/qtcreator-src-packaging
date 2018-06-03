@@ -1,0 +1,4 @@
+usr/share/doc/qtcreator/qtcreator-dev.qch usr/share/qtcreator/doc
+usr/share/doc/qtcreator/qtcreator-dev/* usr/share/doc/qtcreator/html-dev
+usr/share/doc/qtcreator/qtcreator.qch usr/share/qtcreator/doc
+usr/share/doc/qtcreator/qtcreator/* usr/share/doc/qtcreator/html
